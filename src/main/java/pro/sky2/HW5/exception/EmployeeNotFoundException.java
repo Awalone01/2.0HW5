@@ -1,4 +1,4 @@
-package pro.sky2.HW5;
+package pro.sky2.HW5.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

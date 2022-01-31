@@ -1,9 +1,11 @@
-package pro.sky2.HW5;
+package pro.sky2.HW5.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pro.sky2.HW5.service.EmployeeService;
+import pro.sky2.HW5.data.Employee;
 
 @RestController
 @RequestMapping("/employee")
@@ -17,7 +19,7 @@ public class EmployeeController {
 
     @GetMapping("/add")
     public Employee addEmployee(@RequestParam("firstName") String firstName,
-                               @RequestParam("lastName") String lastName) {
+                                @RequestParam("lastName") String lastName) {
         return employeeService.addEmployee(firstName, lastName);
     }
     @GetMapping("/remove")

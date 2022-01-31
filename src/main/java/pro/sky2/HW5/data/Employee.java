@@ -1,4 +1,4 @@
-package pro.sky2.HW5;
+package pro.sky2.HW5.data;
 
 import java.util.Objects;
 
