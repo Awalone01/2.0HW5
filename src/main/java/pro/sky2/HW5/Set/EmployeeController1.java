@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Set;
 
 @RestController
-public class EmployeeController {
+public class EmployeeController1 {
     private final EmployeeService1 employeeService1;
 
 
-    public EmployeeController(EmployeeService1 employeeService1) {
+    public EmployeeController1(EmployeeService1 employeeService1) {
         this.employeeService1 = employeeService1;
     }
 
@@ -26,12 +26,12 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/find/employee-list/")
-    public boolean removeEmployee(@RequestParam("item") String item) {
-        return employeeService1.removeEmployee(item);
+    public boolean findEmployee(@RequestParam("item") String item) {
+        return employeeService1.findEmployee(item);
     }
 
-    @GetMapping(path = "/get/enployee-list")
-    public Set<String> getShoppingList() {
-        return employeeService1.getShoppingList();
+    @GetMapping(path = "/get/employee-list")
+    public Set<String> getEmployeeList() {
+        return employeeService1.getEmployeeList();
     }
 }

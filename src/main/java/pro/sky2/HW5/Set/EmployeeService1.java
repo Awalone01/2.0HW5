@@ -8,5 +8,5 @@ public interface EmployeeService1 {
     boolean findEmployee(String item);
 
 
-    Set<String> getShoppingList();
+    Set<String> getEmployeeList();
 }
