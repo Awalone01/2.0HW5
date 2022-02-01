@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.sky2.HW5.service.EmployeeService;
 import pro.sky2.HW5.data.Employee;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -31,5 +33,10 @@ public class EmployeeController {
     public Employee findEmployee(@RequestParam("firstName") String firstName,
                                @RequestParam("lastName") String lastName) {
         return employeeService.findEmployee(firstName, lastName);
+    }
+
+    @GetMapping("/get")
+    public Set<Employee> getEmployee() {
+        return employeeService.getEmployee();
     }
 }

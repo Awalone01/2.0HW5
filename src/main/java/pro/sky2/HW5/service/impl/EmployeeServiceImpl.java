@@ -2,66 +2,55 @@ package pro.sky2.HW5.service.impl;
 
 import org.springframework.stereotype.Service;
 import pro.sky2.HW5.data.Employee;
-import pro.sky2.HW5.exception.EmployeeArrayFullException;
 import pro.sky2.HW5.exception.EmployeeExistsException;
 import pro.sky2.HW5.exception.EmployeeNotFoundException;
 import pro.sky2.HW5.service.EmployeeService;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final Employee[] employees = new Employee[2];
+    Set<Employee> employees;
 
-    private int size;
+    public EmployeeServiceImpl() {
+        employees = new HashSet<>();
+    }
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
-        if (employees.length == size) {
-            throw new EmployeeArrayFullException("Массив сотрудников заполнен");
-        }
-
         Employee addingEmployee = new Employee(firstName, lastName);
-        int addingEmployeeIndex = getEmployeeIndex(addingEmployee);
 
-        if (addingEmployeeIndex != -1) {
+        if (employees.contains(addingEmployee)) {
             throw new EmployeeExistsException("Этот сотрудник уже добавлен");
         }
-        employees[size++] = addingEmployee;
+        employees.add(addingEmployee);
         return addingEmployee;
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
         Employee removingEmployee = new Employee(firstName, lastName);
-        int employeeIndex = getEmployeeIndex(removingEmployee);
 
-        if (employeeIndex == -1) {
+        if (!employees.remove(removingEmployee)) {
             throw new EmployeeNotFoundException("Этот сотрудник не найден");
         }
-        Employee removedEmployee = employees[employeeIndex];
-        System.arraycopy(employees, employeeIndex + 1, employees, employeeIndex, size - employeeIndex);
-        size--;
-        return removedEmployee;
+        return removingEmployee;
     }
 
-    private int getEmployeeIndex(Employee employee) {
-        for (int i = 0; i < size; i++) {
-            if (employee.equals(employees[i])) {
-                return i;
-            }
+    @Override
+    public Employee findEmployee (String firstName, String lastName){
+        Employee findingEmployee = new Employee(firstName, lastName);
+
+        if (employees.contains(findingEmployee)) {
+            throw new EmployeeNotFoundException("Этот сотрудник не найден");
         }
-        return -1;
+        return findingEmployee;
     }
 
-        @Override
-        public Employee findEmployee (String firstName, String lastName){
-            Employee findingEmployee = new Employee(firstName, lastName);
-            int employeeIndex = getEmployeeIndex(findingEmployee);
-
-            if (employeeIndex == -1) {
-                throw new EmployeeNotFoundException("Этот сотрудник не найден");
-            }
-            return employees[employeeIndex];
-        }
+    @Override
+    public Set<Employee> getEmployee() {
+        return employees;
     }
+}
 
