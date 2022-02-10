@@ -1,14 +1,12 @@
 package pro.sky2.HW5.service;
 
 import pro.sky2.HW5.data.Employee;
-import java.util.Set;
 
 public interface EmployeeService {
-    Employee addEmployee(String firstName, String lastName);
+    Employee getEmployee(Integer id);
 
-    Employee removeEmployee(String firstName, String lastName);
+    String addEmployee(String firstName, String lastName);
 
-    Employee findEmployee(String firstName, String lastName);
+    String removeEmployee(Integer id);
 
-    Set<Employee> getEmployee();
 }

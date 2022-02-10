@@ -2,55 +2,50 @@ package pro.sky2.HW5.service.impl;
 
 import org.springframework.stereotype.Service;
 import pro.sky2.HW5.data.Employee;
-import pro.sky2.HW5.exception.EmployeeExistsException;
-import pro.sky2.HW5.exception.EmployeeNotFoundException;
 import pro.sky2.HW5.service.EmployeeService;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    Set<Employee> employees;
+    Map<Integer, Employee> employees;
+    Integer nextId = 0;
+
 
     public EmployeeServiceImpl() {
-        employees = new HashSet<>();
+        employees = new HashMap<>();
+    }
+
+    private Integer getNextId() {
+        Integer result = nextId;
+        nextId++;
+        return result;
+    }
+
+    private String getNotFoundMessage(Integer id) {
+        return "Пользователь с id = " + id + " не найден";
     }
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
-        Employee addingEmployee = new Employee(firstName, lastName);
+    public Employee getEmployee(Integer id) {
+        return employees.get(id);
+    }
 
-        if (employees.contains(addingEmployee)) {
-            throw new EmployeeExistsException("Этот сотрудник уже добавлен");
+    @Override
+    public String addEmployee(String firstName, String lastName) {
+        employees.put(getNextId(), new Employee(firstName, lastName));
+        return "Новый пользователь " + firstName + " " + lastName + " добавлен";
+    }
+
+    @Override
+    public String removeEmployee(Integer id) {
+        if (employees.containsKey(id)) {
+            return employees.remove(id).getFirstName();
+        } else {
+            return getNotFoundMessage(id);
         }
-        employees.add(addingEmployee);
-        return addingEmployee;
-    }
-
-    @Override
-    public Employee removeEmployee(String firstName, String lastName) {
-        Employee removingEmployee = new Employee(firstName, lastName);
-
-        if (!employees.remove(removingEmployee)) {
-            throw new EmployeeNotFoundException("Этот сотрудник не найден");
-        }
-        return removingEmployee;
-    }
-
-    @Override
-    public Employee findEmployee (String firstName, String lastName){
-        Employee findingEmployee = new Employee(firstName, lastName);
-
-        if (employees.contains(findingEmployee)) {
-            throw new EmployeeNotFoundException("Этот сотрудник не найден");
-        }
-        return findingEmployee;
-    }
-
-    @Override
-    public Set<Employee> getEmployee() {
-        return employees;
     }
 }
 
