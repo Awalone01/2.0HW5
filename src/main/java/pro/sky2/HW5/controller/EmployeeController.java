@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import pro.sky2.HW5.service.EmployeeService;
 import pro.sky2.HW5.data.Employee;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -15,17 +17,25 @@ public class EmployeeController {
 
 
     @GetMapping("/add")
-    public String addEmployee(@RequestParam("firstName") String firstName,
+    public Employee addEmployee(@RequestParam("firstName") String firstName,
                                 @RequestParam("lastName") String lastName) {
         return employeeService.addEmployee(firstName, lastName);
     }
-    @GetMapping("/remove{id}")
-    public String removeEmployee(@PathVariable("id") Integer id) {
-        return employeeService.removeEmployee(id);
+
+    @GetMapping("/remove")
+    public Employee removeEmployee(@RequestParam("firstName") String firstName,
+                                 @RequestParam("lastName") String lastName) {
+        return employeeService.removeEmployee(firstName, lastName);
     }
 
-    @GetMapping("/get{id}")
-    public Employee getEmployee(@PathVariable("id") Integer id) {
-        return employeeService.getEmployee(id);
+    @GetMapping("/find")
+    public Employee findEmployee(@RequestParam("firstName") String firstName,
+                                   @RequestParam("lastName") String lastName) {
+        return employeeService.findEmployee(firstName, lastName);
+    }
+
+    @GetMapping("/get")
+    public Set<Employee> getEmployees() {
+        return employeeService.getAllEmployees();
     }
 }

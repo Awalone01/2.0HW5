@@ -4,53 +4,61 @@ import org.springframework.stereotype.Service;
 import pro.sky2.HW5.data.Employee;
 import pro.sky2.HW5.exception.EmployeeExistsException;
 import pro.sky2.HW5.exception.EmployeeNotFoundException;
-import pro.sky2.HW5.service.EmployeeService;
+import pro.sky2.HW5.service.EmployeeMapService;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeMapServiceImpl implements EmployeeMapService {
 
-    private Set<Employee> employees = new HashSet<>();
+    private Map<String, Employee> employees = new HashMap<>();
 
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
+
         Employee addingEmployee = new Employee(firstName, lastName);
-        if (employees.contains(addingEmployee)) {
+
+        String key = firstName + lastName;
+
+        if (employees.containsKey(key)) {
             throw new EmployeeExistsException("Этот сотрудник уже добавлен");
         }
-        employees.add(addingEmployee);
+        employees.put(key, addingEmployee);
         return addingEmployee;
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
 
-        Employee removingEmployee = new Employee(firstName, lastName);
+        String key = firstName + lastName;
 
-        if (!employees.remove(removingEmployee)) {
+        if (!employees.containsKey(key)) {
             throw new EmployeeNotFoundException("Этот сотрудник не найден");
         }
-            return removingEmployee;
+        return employees.remove(key);
     }
 
     @Override
     public Employee findEmployee(String firstName, String lastName) {
 
-        Employee findingEmployee = new Employee(firstName, lastName);
+        String key = firstName + lastName;
 
-        if (!employees.contains(findingEmployee)) {
+        if (!employees.containsKey(key)) {
             throw new EmployeeNotFoundException("Этот сотрудник не найден");
         }
-        return findingEmployee;
+        return employees.get(key);
     }
 
     @Override
-    public Set<Employee> getAllEmployees() {
+    public Map<String, Employee> getAllEmployees() {
+        for (Map.Entry<String, Employee> pair : employees.entrySet()) {
+            String key = pair.getKey();
+            Employee value = pair.getValue();
+            System.out.println(key + ":" + value);
+        }
         return employees;
     }
 }
