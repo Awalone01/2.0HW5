@@ -18,8 +18,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee addingEmployee = new Employee(firstName, lastName);
 
-//        String key = firstName + lastName;
-
         if (employees.containsKey(key(firstName, lastName))) {
             throw new EmployeeExistsException("Этот сотрудник уже добавлен");
         }
@@ -30,8 +28,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
 
-//        String key = firstName + lastName;
-
         if (!employees.containsKey(key(firstName, lastName))) {
             throw new EmployeeNotFoundException("Этот сотрудник не найден");
         }
@@ -40,8 +36,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEmployee(String firstName, String lastName) {
-
-//        String key = firstName + lastName;
 
         if (!employees.containsKey(key(firstName, lastName))) {
             throw new EmployeeNotFoundException("Этот сотрудник не найден");
@@ -58,16 +52,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public String key(String firstName, String lastName) {
         return firstName + lastName;
     }
-
-//    @Override
-//    public Map<String, Employee> getAllEmployees() {
-//        for (Map.Entry<String, Employee> pair : employees.entrySet()) {
-//            String key = pair.getKey();
-//            Employee value = pair.getValue();
-//        }
-//        return employees;
-//    }
-
 
 }
 
