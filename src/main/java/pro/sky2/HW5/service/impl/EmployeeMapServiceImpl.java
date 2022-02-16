@@ -8,13 +8,11 @@ import pro.sky2.HW5.service.EmployeeMapService;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 @Service
 public class EmployeeMapServiceImpl implements EmployeeMapService {
 
     private Map<String, Employee> employees = new HashMap<>();
-
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
