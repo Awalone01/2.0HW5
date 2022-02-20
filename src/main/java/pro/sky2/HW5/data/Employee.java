@@ -7,7 +7,6 @@ public class Employee {
     private String lastName;
 
     private int salary;
-
     private int departmentId;
 
     public Employee(String firstName, String lastName) {
@@ -74,4 +73,5 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
+
 }

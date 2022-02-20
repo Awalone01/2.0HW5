@@ -11,10 +11,10 @@ import java.util.*;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private Map<String, Employee> employees = new HashMap<>();
+    private final Map<String, Employee> employees = new HashMap<>();
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
+    public Employee addEmployee(String firstName, String lastName, int salary, int departmentId) {
 
         Employee addingEmployee = new Employee(firstName, lastName);
 
@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee removeEmployee(String firstName, String lastName) {
+    public Employee removeEmployee(String firstName, String lastName, int salary, int departmentId) {
 
         if (!employees.containsKey(key(firstName, lastName))) {
             throw new EmployeeNotFoundException("Этот сотрудник не найден");
@@ -35,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee findEmployee(String firstName, String lastName) {
+    public Employee findEmployee(String firstName, String lastName, int salary, int departmentId) {
 
         if (!employees.containsKey(key(firstName, lastName))) {
             throw new EmployeeNotFoundException("Этот сотрудник не найден");

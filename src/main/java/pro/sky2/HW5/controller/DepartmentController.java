@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.sky2.HW5.data.Employee;
 import pro.sky2.HW5.service.DepartmentService;
 
-
+import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/departments")
@@ -29,12 +30,12 @@ public class DepartmentController {
     }
 
     @GetMapping(path = "/all", params = "departmentsId")
-    public Employee findEmployeesByDepartment(@RequestParam("departmentId") int department) {
+    public Collection<Employee> findEmployeesByDepartment(@RequestParam("departmentId") int department) {
         return departmentService.findEmployeesByDepartment(department);
     }
 
     @GetMapping("/all")
-    public Employee findAllEmployeesDepartment() {
+    public List<Employee> findAllEmployeesDepartment() {
         return departmentService.findAllEmployees();
     }
 

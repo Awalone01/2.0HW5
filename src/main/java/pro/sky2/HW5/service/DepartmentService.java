@@ -1,7 +1,9 @@
 package pro.sky2.HW5.service;
 
-
 import pro.sky2.HW5.data.Employee;
+
+import java.util.Collection;
+import java.util.List;
 
 public interface DepartmentService {
 
@@ -9,7 +11,7 @@ public interface DepartmentService {
 
     Employee employeeWithMinSalary(int department);
 
-    Employee findEmployeesByDepartment(int department);
+    Collection<Employee> findEmployeesByDepartment(int department);
 
-    Employee findAllEmployees();
+    List<Employee> findAllEmployees();
 }
