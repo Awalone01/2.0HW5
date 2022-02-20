@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface DepartmentService {
 
-    Employee employeeWithMaxSalary(int department);
+    Employee employeeWithMaxSalary(int departmentId);
 
-    Employee employeeWithMinSalary(int department);
+    Employee employeeWithMinSalary(int departmentId);
 
-    Collection<Employee> findEmployeesByDepartment(int department);
+    Collection<Employee> findEmployeesByDepartment(int departmentId);
 
     List<Employee> findAllEmployees();
 }
