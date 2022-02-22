@@ -8,6 +8,9 @@ public interface EmployeeService {
 
     Employee addEmployee(String firstName, String lastName, int salary, int departmentId);
 
+//    boolean isLetter(String firstNane, String lastName);
+//    void isNotLetter(String... names);
+
     Employee removeEmployee(String firstName, String lastName, int salary, int departmentId);
 
     Employee findEmployee(String firstName, String lastName, int salary, int departmentId);
@@ -15,5 +18,7 @@ public interface EmployeeService {
     List<Employee> getAllEmployees();
 
     String key (String firstName, String lastName, int salary, int departmentId);
+
+//    boolean isAlpha(String firstName, String lastName);
 
 }
