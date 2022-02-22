@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    Employee addEmployee(String firstName, String lastName);
+    Employee addEmployee(String firstName, String lastName, int salary, int departmentId);
 
-    Employee removeEmployee(String firstName, String lastName);
+    Employee removeEmployee(String firstName, String lastName, int salary, int departmentId);
 
-    Employee findEmployee(String firstName, String lastName);
+    Employee findEmployee(String firstName, String lastName, int salary, int departmentId);
 
     List<Employee> getAllEmployees();
 
-    String key (String firstName, String lastName);
+    String key (String firstName, String lastName, int salary, int departmentId);
 
 }
