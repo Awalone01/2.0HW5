@@ -1,9 +1,6 @@
 package pro.sky2.HW5.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.sky2.HW5.data.Employee;
 import pro.sky2.HW5.service.EmployeeService;
 
