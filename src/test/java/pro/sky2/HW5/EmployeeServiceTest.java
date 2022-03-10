@@ -1,30 +1,71 @@
 package pro.sky2.HW5;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import pro.sky2.HW5.repository.EmployeeRepository;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import pro.sky2.HW5.data.Employee;
+import pro.sky2.HW5.exception.EmployeeExistsException;
+import pro.sky2.HW5.exception.EmployeeNotFoundException;
+import pro.sky2.HW5.exception.NotLetterException;
 import pro.sky2.HW5.service.impl.EmployeeServiceImpl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static pro.sky2.HW5.EmployeeServiceConstants.EMPTY_NAME;
+import java.util.stream.Stream;
 
-@ExtendWith(MockitoExtension.class)
+import static org.junit.jupiter.api.Assertions.*;
+import static pro.sky2.HW5.EmployeeServiceConstants.*;
+
+
 public class EmployeeServiceTest {
 
-    @Mock
-    private EmployeeRepository employeeRepositoryMock;
+    private EmployeeServiceImpl out = new EmployeeServiceImpl();
 
-    @InjectMocks
-    private EmployeeServiceImpl out;
-
-//    private final EmployeeService out = new EmployeeService();
-//
-    @Test
-    public void shouldReturnEmptyName() {
-        assertEquals(EMPTY_NAME, out.add);
+    @BeforeEach
+    public void initialize() {
+       out = new EmployeeServiceImpl();
     }
+
+    @Test
+    public void shouldAddEmployeeWhenHeDoesntExist() {
+        Employee expectedEmployee = new Employee (FIRST_NAME, LAST_NAME);
+        assertEquals(0, out.getAllEmployees().size());
+        Employee actualEmployee = out.addEmployee (FIRST_NAME, LAST_NAME);
+        assertEquals(expectedEmployee, actualEmployee);
+        assertEquals(1, out.getAllEmployees().size());
+        assertTrue(out.getAllEmployees().contains(expectedEmployee));
+    }
+
+    @Test
+    public void shouldThrowEmployeeExistsExceptionWhenEmployeeAlreadyExist() {
+        Employee expectedEmployee = out.addEmployee (FIRST_NAME, LAST_NAME);
+        assertEquals(1, out.getAllEmployees().size());
+        assertThrows(EmployeeExistsException.class, () -> out.addEmployee(FIRST_NAME, LAST_NAME));
+    }
+
+    public static Stream<Arguments> wrongNames() {
+        return Stream.of(
+                Arguments.of(FIRST_NAME, WRONG_LAST_NAME),
+                Arguments.of(WRONG_FIRST_NAME, LAST_NAME),
+                Arguments.of(WRONG_FIRST_NAME, WRONG_LAST_NAME),
+                Arguments.of(EMPTY_FIRST_NAME, LAST_NAME),
+                Arguments.of(FIRST_NAME, EMPTY_LAST_NAME),
+                Arguments.of(EMPTY_FIRST_NAME, EMPTY_LAST_NAME),
+                Arguments.of(FIRST_NAME, ONLY_SPACES_LAST_NAME),
+                Arguments.of(ONLY_SPACES_FIRST_NAME, LAST_NAME),
+                Arguments.of(ONLY_SPACES_FIRST_NAME, ONLY_SPACES_LAST_NAME)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("wrongNames")
+    public void shouldThrowsNotLetterException(String firstName, String lastName) {
+        assertThrows(NotLetterException.class, () -> out.addEmployee(firstName, lastName));
+    }
+
+    @Test
+    public void shouldThrowsEmployeeNotFoundExceptionWhenEmployeeDoesntExist() {
+        assertThrows(EmployeeNotFoundException.class, () -> out.removeEmployee(FIRST_NAME, LAST_NAME));
+    }
+
 }
