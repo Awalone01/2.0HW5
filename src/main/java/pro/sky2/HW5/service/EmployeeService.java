@@ -14,6 +14,6 @@ public interface EmployeeService {
 
     List<Employee> getAllEmployees();
 
-    String key (String firstName, String lastName, int salary, int departmentId);
+    String getKey(String firstName, String lastName, int salary, int departmentId);
 
 }
