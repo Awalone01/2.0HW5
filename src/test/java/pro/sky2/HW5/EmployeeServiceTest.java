@@ -11,6 +11,8 @@ import pro.sky2.HW5.exception.EmployeeNotFoundException;
 import pro.sky2.HW5.exception.NotLetterException;
 import pro.sky2.HW5.service.impl.EmployeeServiceImpl;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,6 +68,41 @@ public class EmployeeServiceTest {
     @Test
     public void shouldThrowsEmployeeNotFoundExceptionWhenEmployeeDoesntExist() {
         assertThrows(EmployeeNotFoundException.class, () -> out.removeEmployee(FIRST_NAME, LAST_NAME));
+    }
+
+    @Test
+    public void shouldRemovingEmployeeWhenHeExists() {
+        Employee expectedEmployee = out.addEmployee (FIRST_NAME, LAST_NAME);
+        assertEquals(1, out.getAllEmployees().size());
+        Employee removingEmployee = out.removeEmployee(FIRST_NAME, LAST_NAME);
+        assertEquals(0, out.getAllEmployees().size());
+        assertFalse(out.getAllEmployees().contains(expectedEmployee));
+    }
+
+    @Test
+    public void shouldFindEmployeeWhenHeExists() {
+        Employee expectedEmployee = out.addEmployee (FIRST_NAME, LAST_NAME);
+        assertEquals(1, out.getAllEmployees().size());
+        Employee foundEmployee = out.findEmployee(FIRST_NAME, LAST_NAME);
+        assertEquals(expectedEmployee, foundEmployee);
+        assertTrue(out.getAllEmployees().contains(expectedEmployee));
+    }
+
+    @Test
+    public void shouldThrowsEmployeeNotFoundExceptionWhenWeSearchEmployeeWhoDoesntExist() {
+        assertThrows(EmployeeNotFoundException.class, () -> out.findEmployee(FIRST_NAME, LAST_NAME));
+    }
+
+    @Test
+    public void shouldReturnEmptyCollectionWhenEmployeeDoesntExists() {
+        assertTrue(out.getAllEmployees().isEmpty());
+    }
+
+    @Test
+    public void shouldReturnCollectionWhenEmployeeExists() {
+        Employee expectedEmployee = out.addEmployee (FIRST_NAME, LAST_NAME);
+        Collection<Employee> expected = List.of(expectedEmployee);
+        assertIterableEquals(expected, out.getAllEmployees());
     }
 
 }
