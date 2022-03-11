@@ -28,7 +28,7 @@ public class EmployeeServiceConstants {
     public static final Employee EMPLOYEE2_MIN_SALARY2 = new Employee(FIRST_NAME2, LAST_NAME, MIN_SALARY2, DEPARTMENT_ID2);
 
     public static final List<Employee> EMPLOYEES_SET = List.of(EMPLOYEE1_MAX_SALARY1, EMPLOYEE2_MIN_SALARY1);
-
+    public static final List<Employee> ALL_EMPLOYEES = List.of(EMPLOYEE1_MAX_SALARY1, EMPLOYEE2_MIN_SALARY1, EMPLOYEE1_MAX_SALARY2, EMPLOYEE2_MIN_SALARY2);
 
     public static final String WRONG_FIRST_NAME = "Alex0";
     public static final String WRONG_LAST_NAME = "Volkov1";
