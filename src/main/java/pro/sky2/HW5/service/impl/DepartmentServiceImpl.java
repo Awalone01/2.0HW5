@@ -5,6 +5,8 @@ import pro.sky2.HW5.data.Employee;
 import pro.sky2.HW5.exception.EmployeeNotFoundException;
 import pro.sky2.HW5.service.DepartmentService;
 import pro.sky2.HW5.service.EmployeeService;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +47,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Employee> findAllEmployees() {
-        return employeeService.getAllEmployees().stream().
-                collect(Collectors.toList());
+        return new ArrayList<>(employeeService.getAllEmployees());
     }
 }
